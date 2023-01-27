@@ -30,8 +30,13 @@ const Content = (props) => {
 
 const Total = (props) => {
   console.log(props)
+  console.log('Tulostetaan forEach taulukosta:')
+  props.parts.forEach(value => {
+    console.log(value)
+  })
+  const summa = props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises
   return (
-    <p>Number of exercises {props.exercisesSum}</p>
+    <p>Number of exercises {summa}</p>
   )
 }
 
@@ -58,7 +63,7 @@ const App = () => {
       
       <Content parts={parts} />
 
-      <Total exercisesSum={parts[0].exercises + parts[1].exercises + parts[2].exercises} />
+      <Total parts={parts} />
       
     </div>
   )
