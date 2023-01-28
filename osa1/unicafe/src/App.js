@@ -27,9 +27,9 @@ const App = () => {
       </div>
       <Otsake teksti="statistics" />
       <div>
-        <Statistic variable="good" amount="0" />
-        <Statistic variable="neutral" amount="0" />
-        <Statistic variable="bad" amount="0" />
+        <Statistic variable="good" amount={good} />
+        <Statistic variable="neutral" amount={neutral} />
+        <Statistic variable="bad" amount={bad}/>
       </div>
     </div>
   )
