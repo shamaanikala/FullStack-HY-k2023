@@ -25,18 +25,31 @@ const App = () => {
   ]
    
   const [selected, setSelected] = useState(0)
+  const [votes, setVotes] = useState(Array.apply(null, new Array(anecdotes.length)).map(Number.prototype.valueOf,0))
+
+  // nollataulun luonti:
+  // https://stackoverflow.com/questions/20222501/how-to-create-a-zero-filled-javascript-array-of-arbitrary-length/22209781
+  //const votes = Array.apply(null, new Array(anecdotes.length)).map(Number.prototype.valueOf,0);
+  //console.log(votes)
 
   const randomSelected = () => {
     console.log('selected',selected)
     setSelected(getRandomInt(anecdotes.length))
   }
-  //{anecdotes[getRandomInt(anecdotes.length)]}
+  
+  const incrementVoteCount = () => {
+    console.log('selected,ääniä',selected,votes)
+    const copy = [...votes]
+    copy[selected] += 1
+    setVotes(copy)
+    console.log(copy)
+  }
 
   return (
     <div>
       {anecdotes[selected]}<br />
-      <Votes votecount="0" /><br />
-      <Button text="vote" />
+      <Votes votecount={votes[selected]} /><br />
+      <Button handleClick={() => incrementVoteCount()} text="vote" />
       <Button handleClick={() => randomSelected()} text="next anecdote" />
     </div>
   )
