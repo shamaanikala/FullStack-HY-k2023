@@ -29,8 +29,15 @@ const Statistics = (props) => {
   }
 
   const calcPositivePercent = () => ((good / calculateSum()) * 100.0).toString().concat(' %')
+  
+  if (calculateSum() === 0) {
+    return (
+      <div>No feedback given</div>
+    )
+  }
+  
   return (
-  <div>
+      <div>
         <Statistic variable="good" amount={good} />
         <Statistic variable="neutral" amount={neutral} />
         <Statistic variable="bad" amount={bad} />
