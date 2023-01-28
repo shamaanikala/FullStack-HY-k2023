@@ -30,10 +30,8 @@ const App = () => {
 
   return (
     <div>
-      {anecdotes[selected]}
-      <p>
-        <Button handleClick={() => randomSelected()} text="next anecdote" />
-      </p>
+      {anecdotes[selected]}<br />
+      <Button handleClick={() => randomSelected()} text="next anecdote" />
     </div>
   )
 }
