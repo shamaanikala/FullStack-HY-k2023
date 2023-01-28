@@ -21,13 +21,23 @@ const App = () => {
     console.log('good klikattu')
   }
 
+  const handleNeutralClick = () => {
+    console.log('neutral klikattu')
+  }
+
+  const handleBadClick = () => {
+    console.log('bad klikattu')
+  }
+
+
+
   return (
     <div>
       <Otsake teksti="give feedback" />
       <div>
         <Button handleClick={handleGoodClick} text="good" />
-        <Button text="neutral" />
-        <Button text="bad" />
+        <Button handleClick={handleNeutralClick} text="neutral" />
+        <Button handleClick={handleBadClick} text="bad" />
       </div>
       <Otsake teksti="statistics" />
       <div>
