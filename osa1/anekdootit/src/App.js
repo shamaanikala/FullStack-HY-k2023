@@ -12,6 +12,10 @@ const Votes = (props) => (
   <>has {props.votecount} votes</>
 )
 
+const Title = (props) => (
+  <h1>{props.text}</h1>
+)
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -47,10 +51,12 @@ const App = () => {
 
   return (
     <div>
+      <Title text="Anecdote of the day" />
       {anecdotes[selected]}<br />
       <Votes votecount={votes[selected]} /><br />
       <Button handleClick={() => incrementVoteCount()} text="vote" />
       <Button handleClick={() => randomSelected()} text="next anecdote" />
+      <Title text="Anecdote with most votes" />
     </div>
   )
 }
