@@ -35,7 +35,7 @@ const App = () => {
     setBad(updatedBad)
   }
 
-  const calculateSum = () => good + neutral + bad
+  const calculateSum = () => (good + neutral + bad)
 
   const calculateAvg = () => {
     //const sum = good + neutral + bad
@@ -46,6 +46,8 @@ const App = () => {
     console.log('good,neutral,bad',goodValue,neutralValue,badValue)
     return (goodValue+badValue)/calculateSum()
   }
+
+  const calcPositivePercent = () => ((good / calculateSum()) * 100.0).toString().concat(' %')
 
 
 
@@ -64,7 +66,7 @@ const App = () => {
         <Statistic variable="bad" amount={bad} />
         <Statistic variable="all" amount={calculateSum()} />
         <Statistic variable="average" amount={calculateAvg()} />
-        <Statistic variable="positive" amount="?%" />
+        <Statistic variable="positive" amount={calcPositivePercent()} />
       </div>
     </div>
   )
