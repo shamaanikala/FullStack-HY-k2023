@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 
-const Otsake = () => <h1>give feedback</h1>
+const Otsake = props => <h1>{props.teksti}</h1>
 
 const Button = (props) => (
   <button>{props.text}</button>
@@ -15,12 +15,13 @@ const App = () => {
 
   return (
     <div>
-      <Otsake />
+      <Otsake teksti="give feedback" />
       <div>
         <Button text="good" />
         <Button text="neutral" />
         <Button text="bad" />
       </div>
+      <Otsake teksti="statistics" />
     </div>
   )
 }
