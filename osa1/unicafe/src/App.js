@@ -8,7 +8,7 @@ const Button = (props) => (
 )
 
 const StatisticLine = (props) => (
-  <>{props.variable} {props.amount}<br /></>
+  <><tr><td>{props.variable}</td><td>{props.amount}</td></tr></>
 )
 
 const Statistics = (props) => {
@@ -35,16 +35,18 @@ const Statistics = (props) => {
       <div>No feedback given</div>
     )
   }
-  
+  // table:lla pitää olla thead, tbody ja tfoot, jotta toimii
   return (
-      <div>
-        <StatisticLine variable="good" amount={good} />
-        <StatisticLine variable="neutral" amount={neutral} />
-        <StatisticLine variable="bad" amount={bad} />
-        <StatisticLine variable="all" amount={calculateSum()} />
-        <StatisticLine variable="average" amount={calculateAvg()} />
-        <StatisticLine variable="positive" amount={calcPositivePercent()} />
-      </div>
+      <table><thead></thead>
+        <tbody>
+          <StatisticLine variable="good" amount={good} />
+          <StatisticLine variable="neutral" amount={neutral} />
+          <StatisticLine variable="bad" amount={bad} />
+          <StatisticLine variable="all" amount={calculateSum()} />
+          <StatisticLine variable="average" amount={calculateAvg()} />
+          <StatisticLine variable="positive" amount={calcPositivePercent()} />
+        </tbody>
+      <tfoot></tfoot></table>
   )
   }
 
