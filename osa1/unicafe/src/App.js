@@ -4,7 +4,7 @@ import { useState } from 'react'
 const Otsake = props => <h1>{props.teksti}</h1>
 
 const Button = (props) => (
-  <button>{props.text}</button>
+  <button onClick={props.handleClick}>{props.text}</button>
 )
 
 const Statistic = (props) => (
@@ -17,11 +17,15 @@ const App = () => {
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
 
+  const handleGoodClick = () => {
+    console.log('good klikattu')
+  }
+
   return (
     <div>
       <Otsake teksti="give feedback" />
       <div>
-        <Button text="good" />
+        <Button handleClick={handleGoodClick} text="good" />
         <Button text="neutral" />
         <Button text="bad" />
       </div>
