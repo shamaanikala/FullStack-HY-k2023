@@ -49,6 +49,14 @@ const App = () => {
     console.log(copy)
   }
 
+  // huom Math.max syntaksi!
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/max
+  const getMaxVotesIndex = () => {
+    console.log(votes.indexOf(Math.max(...votes)) )
+    console.log(Math.max(...votes))
+    return votes.indexOf(Math.max(...votes)) 
+  }
+
   return (
     <div>
       <Title text="Anecdote of the day" />
@@ -57,6 +65,8 @@ const App = () => {
       <Button handleClick={() => incrementVoteCount()} text="vote" />
       <Button handleClick={() => randomSelected()} text="next anecdote" />
       <Title text="Anecdote with most votes" />
+      {anecdotes[getMaxVotesIndex()]}<br />
+      <Votes votecount={votes[getMaxVotesIndex()]} /><br />
     </div>
   )
 }
