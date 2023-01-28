@@ -1,5 +1,8 @@
 import { useState } from 'react'
 
+
+const Otsake = () => <h1>give feedback</h1>
+
 const App = () => {
   // tallenna napit omaan tilaansa
   const [good, setGood] = useState(0)
@@ -8,6 +11,7 @@ const App = () => {
 
   return (
     <div>
+      <Otsake />
       code here
     </div>
   )
