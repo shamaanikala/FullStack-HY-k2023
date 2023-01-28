@@ -11,6 +11,36 @@ const Statistic = (props) => (
   <>{props.variable} {props.amount}<br /></>
 )
 
+const Statistics = (props) => {
+  const good = props.data[0]
+  const neutral = props.data[1]
+  const bad = props.data[2]
+
+  const calculateSum = () => (good + neutral + bad)
+
+  const calculateAvg = () => {
+    //const sum = good + neutral + bad
+    console.log('Palautteita yhteensä',calculateSum())
+    const goodValue = good // good = 1
+    const neutralValue = 0 // neutral = 0
+    const badValue = -bad // bad = -1
+    console.log('good,neutral,bad',goodValue,neutralValue,badValue)
+    return (goodValue+badValue)/calculateSum()
+  }
+
+  const calcPositivePercent = () => ((good / calculateSum()) * 100.0).toString().concat(' %')
+  return (
+  <div>
+        <Statistic variable="good" amount={good} />
+        <Statistic variable="neutral" amount={neutral} />
+        <Statistic variable="bad" amount={bad} />
+        <Statistic variable="all" amount={calculateSum()} />
+        <Statistic variable="average" amount={calculateAvg()} />
+        <Statistic variable="positive" amount={calcPositivePercent()} />
+      </div>
+  )
+  }
+
 const App = () => {
   // tallenna napit omaan tilaansa
   const [good, setGood] = useState(0)
@@ -35,22 +65,6 @@ const App = () => {
     setBad(updatedBad)
   }
 
-  const calculateSum = () => (good + neutral + bad)
-
-  const calculateAvg = () => {
-    //const sum = good + neutral + bad
-    console.log('Palautteita yhteensä',calculateSum())
-    const goodValue = good // good = 1
-    const neutralValue = 0 // neutral = 0
-    const badValue = -bad // bad = -1
-    console.log('good,neutral,bad',goodValue,neutralValue,badValue)
-    return (goodValue+badValue)/calculateSum()
-  }
-
-  const calcPositivePercent = () => ((good / calculateSum()) * 100.0).toString().concat(' %')
-
-
-
   return (
     <div>
       <Otsake teksti="give feedback" />
@@ -60,16 +74,10 @@ const App = () => {
         <Button handleClick={handleBadClick} text="bad" />
       </div>
       <Otsake teksti="statistics" />
-      <div>
-        <Statistic variable="good" amount={good} />
-        <Statistic variable="neutral" amount={neutral} />
-        <Statistic variable="bad" amount={bad} />
-        <Statistic variable="all" amount={calculateSum()} />
-        <Statistic variable="average" amount={calculateAvg()} />
-        <Statistic variable="positive" amount={calcPositivePercent()} />
-      </div>
+      <Statistics data={[good,neutral,bad]} />
     </div>
   )
 }
 
 export default App;
+
