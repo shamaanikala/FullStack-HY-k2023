@@ -25,10 +25,14 @@ const App = () => {
 
   const handleNeutralClick = () => {
     console.log('neutral klikattu')
+    const updatedNeutral = neutral + 1
+    setNeutral(updatedNeutral)
   }
 
   const handleBadClick = () => {
     console.log('bad klikattu')
+    const updatedBad = bad + 1
+    setBad(updatedBad)
   }
 
 
