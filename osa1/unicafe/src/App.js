@@ -49,7 +49,10 @@ const App = () => {
       <div>
         <Statistic variable="good" amount={good} />
         <Statistic variable="neutral" amount={neutral} />
-        <Statistic variable="bad" amount={bad}/>
+        <Statistic variable="bad" amount={bad} />
+        <Statistic variable="all" amount="?" />
+        <Statistic variable="average" amount="?" />
+        <Statistic variable="positive" amount="?%" />
       </div>
     </div>
   )
