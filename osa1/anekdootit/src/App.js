@@ -8,6 +8,10 @@ const Button = (props) => (
   <button onClick={props.handleClick}>{props.text}</button>
 )
 
+const Votes = (props) => (
+  <>has {props.votecount} votes</>
+)
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -31,6 +35,8 @@ const App = () => {
   return (
     <div>
       {anecdotes[selected]}<br />
+      <Votes votecount="0" /><br />
+      <Button text="vote" />
       <Button handleClick={() => randomSelected()} text="next anecdote" />
     </div>
   )
