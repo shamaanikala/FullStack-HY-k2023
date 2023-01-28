@@ -35,6 +35,18 @@ const App = () => {
     setBad(updatedBad)
   }
 
+  const calculateSum = () => good + neutral + bad
+
+  const calculateAvg = () => {
+    //const sum = good + neutral + bad
+    console.log('Palautteita yhteensä',calculateSum())
+    const goodValue = good // good = 1
+    const neutralValue = 0 // neutral = 0
+    const badValue = -bad // bad = -1
+    console.log('good,neutral,bad',goodValue,neutralValue,badValue)
+    return (goodValue+badValue)/calculateSum()
+  }
+
 
 
   return (
@@ -50,8 +62,8 @@ const App = () => {
         <Statistic variable="good" amount={good} />
         <Statistic variable="neutral" amount={neutral} />
         <Statistic variable="bad" amount={bad} />
-        <Statistic variable="all" amount="?" />
-        <Statistic variable="average" amount="?" />
+        <Statistic variable="all" amount={calculateSum()} />
+        <Statistic variable="average" amount={calculateAvg()} />
         <Statistic variable="positive" amount="?%" />
       </div>
     </div>
