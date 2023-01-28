@@ -7,6 +7,10 @@ const Button = (props) => (
   <button>{props.text}</button>
 )
 
+const Statistic = (props) => (
+  <>{props.variable} {props.amount}<br /></>
+)
+
 const App = () => {
   // tallenna napit omaan tilaansa
   const [good, setGood] = useState(0)
@@ -22,6 +26,11 @@ const App = () => {
         <Button text="bad" />
       </div>
       <Otsake teksti="statistics" />
+      <div>
+        <Statistic variable="good" amount="0" />
+        <Statistic variable="neutral" amount="0" />
+        <Statistic variable="bad" amount="0" />
+      </div>
     </div>
   )
 }
