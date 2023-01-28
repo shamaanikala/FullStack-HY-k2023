@@ -19,6 +19,8 @@ const App = () => {
 
   const handleGoodClick = () => {
     console.log('good klikattu')
+    const updatedGood = good + 1
+    setGood(updatedGood)
   }
 
   const handleNeutralClick = () => {
