@@ -4,6 +4,10 @@ import { useState } from 'react'
 // random JavaScript https://www.w3schools.com/js/js_random.asp
 const getRandomInt = (n) => Math.floor(Math.random() * n);
 
+const Button = (props) => (
+  <button onClick={props.handleClick}>{props.text}</button>
+)
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -20,9 +24,9 @@ const App = () => {
 
   return (
     <div>
-      {anecdotes[selected]}
+      {anecdotes[getRandomInt(anecdotes.length)]}
       <p>
-        {anecdotes[getRandomInt(anecdotes.length)]}
+        <Button text="next anecdote" />
       </p>
     </div>
   )
