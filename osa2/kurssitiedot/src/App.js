@@ -18,9 +18,6 @@ const Part = ({part}) => {
 
 // Tämä renderöi kaiken yhdellä kertaa
 const Content = ({parts}) => {
-  //console.log(parts)
-  //console.log('Toimiiko mappaus?')
-  //console.log(parts.map(p => <Part part={p} />))
   console.log('Tulostetaan part id:t')
   console.log(parts.map(p => p.id))
   return (
@@ -29,20 +26,9 @@ const Content = ({parts}) => {
     </div>
   )
 }
-//<Part part={parts.parts[0]}  />
-//<Part part={parts.parts[1]}  />
-//<Part part={parts.parts[2]}  />
 
-// total lasketaan mallivastauksissa App-
-// komponentissa annettujen exercisesX summana, joka 
-// annetaan totallille propsina
 const Total = ({parts}) => {
   console.log(parts)
-  //console.log('Tulostetaan forEach taulukosta:')
-  //props.parts.forEach(value => {
-  //  console.log(value)
-  //})
-  //const summa = props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises
   const summa = parts.reduce((summa,osa) => {
     if (!Object.hasOwn(osa,'exercises')) {
       // jostain syystä undefined ei jää haaviin === null
@@ -92,6 +78,11 @@ const App = () => {
         id: 3
       },
       {
+        name: 'Redux',
+        exercises: 11,
+        id: 4
+      },
+      {
         name: "Lamaannus",
         description: "Laskennan mallien mallinnus",
         exercises: 666,
@@ -102,7 +93,7 @@ const App = () => {
         id: 300
       },
       {
-        id:4
+        id:5
       }
   ]
 }
