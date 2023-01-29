@@ -1,5 +1,12 @@
 import Courses from "./components/Courses";
 
+const Header = ({text}) => {
+  console.log(text)
+  return (
+    <h1>{text}</h1>
+  )
+}
+
 const App = () => {
   const courses = [
     {
@@ -61,6 +68,7 @@ const App = () => {
 
   return (
     <div>
+      <Header text="Web development curriculum" />
       <Courses courses={courses} />
     </div>
   )
