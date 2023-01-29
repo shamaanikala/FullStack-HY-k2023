@@ -36,13 +36,25 @@ const Content = ({parts}) => {
 // total lasketaan mallivastauksissa App-
 // komponentissa annettujen exercisesX summana, joka 
 // annetaan totallille propsina
-const Total = (props) => {
-  console.log(props)
-  console.log('Tulostetaan forEach taulukosta:')
-  props.parts.forEach(value => {
-    console.log(value)
-  })
-  const summa = props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises
+const Total = ({parts}) => {
+  console.log(parts)
+  //console.log('Tulostetaan forEach taulukosta:')
+  //props.parts.forEach(value => {
+  //  console.log(value)
+  //})
+  //const summa = props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises
+  const summa = parts.reduce((summa,osa) => {
+    if (!Object.hasOwn(osa,'exercises')) {
+      // jostain syystä undefined ei jää haaviin === null
+      console.log('Osalle ei ole määritelty tehtävien määrää!')
+      return summa
+    }
+    console.log('tehtävät löytyvät')
+    summa += osa.exercises
+    console.log('reducessa',summa,osa,osa.exercises)
+    return summa
+  },0)
+  console.log('Tehtävien summa',summa)
   return (
     <p>Number of exercises {summa}</p>
   )
@@ -54,10 +66,10 @@ const Course = ({course}) => {
     <>
       <Header course={course.name} />
       <Content parts={course.parts} />
+      <Total parts={course.parts} />
     </>
   )
 }
-//<Total parts={course.parts} />
 
 const App = () => {
   const course = {
