@@ -6,9 +6,20 @@ const App = () => {
   ])
   const [newName, setNewName] = useState('')
 
-  const addName = (event) => {
-    console.log('Lisätään nimi',event)
+  // TODO 29.1.2023 19.52
+  // TODO: Koska nimiä käytetään id:nä, niin
+  // lisää tarkistus, että nimet pysyvät yksikäsitteisinä
+  // tai lisää id:t, joilla erottaa täyskaimat toisistaan.
+  // Reactille on pakko olla yksikäsitteinen key
+  const addPerson = (event) => {
+    console.log('Lisätään henkilö',event)
     event.preventDefault()
+    const personObject = {
+      name: newName
+    }
+
+    setPersons(persons.concat(personObject))
+    setNewName('')
   }
 
   const handleNameField = (event) => {
@@ -20,7 +31,7 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>
       <div>debug: {newName}</div>
-      <form onSubmit={addName}>
+      <form onSubmit={addPerson}>
         <div>
           name: <input value={newName} onChange={handleNameField} />
         </div>
@@ -29,7 +40,7 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
-      ...
+      <div>{persons.map(p => <p key={p.name}>{p.name}</p>)}</div>
     </div>
   );
 }
