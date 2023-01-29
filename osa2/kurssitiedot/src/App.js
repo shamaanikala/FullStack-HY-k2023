@@ -1,7 +1,14 @@
-const Header = (props) => {
-  console.log(props)
+const Header = ({text}) => {
+  console.log(text)
   return (
-    <h1>{props.course}</h1>
+    <h1>{text}</h1>
+  )
+}
+
+const CourseHeader = ({name}) => {
+  console.log('Piirretään kurssin otsikko',name)
+  return (
+    <h2>{name}</h2>
   )
 }
 
@@ -50,57 +57,84 @@ const Course = ({course}) => {
   console.log('Toimiiko dekonstruktoitu course',course)
   return (
     <>
-      <Header course={course.name} />
+      <CourseHeader course={course.name} />
       <Content parts={course.parts} />
       <Total parts={course.parts} />
     </>
   )
 }
 
-const App = () => {
-  const course = {
-    name: 'Half Stack application development',
-    id: 1,
-    parts: [
-      {
-        name: 'Fundamentals of React',
-        exercises: 10,
-        id: 1
-      },
-      {
-        name: 'Using props to pass data',
-        exercises:  7,
-        id: 2
-      },
-      {
-        name: 'State of a component',
-        exercises: 14,
-        id: 3
-      },
-      {
-        name: 'Redux',
-        exercises: 11,
-        id: 4
-      },
-      {
-        name: "Lamaannus",
-        description: "Laskennan mallien mallinnus",
-        exercises: 666,
-        id: 1640
-      },
-      {
-        name: "Free Credits",
-        id: 300
-      },
-      {
-        id:5
-      }
-  ]
+const Courses = ({courses}) => {
+  return (
+    <>
+      <Header text="Web development curriculum" />
+      {courses.map(c => <Course key={c.id} course={c} />)}
+    </>
+  )
 }
+
+const App = () => {
+  const courses = [
+    {
+      name: 'Half Stack application development',
+      id: 1,
+      parts: [
+        {
+          name: 'Fundamentals of React',
+          exercises: 10,
+          id: 1
+        },
+        {
+          name: 'Using props to pass data',
+          exercises:  7,
+          id: 2
+        },
+        {
+          name: 'State of a component',
+          exercises: 14,
+          id: 3
+        },
+        {
+          name: 'Redux',
+          exercises: 11,
+          id: 4
+        },
+        {
+          name: "Lamaannus",
+          description: "Laskennan mallien mallinnus",
+          exercises: 666,
+          id: 1640
+        },
+        {
+          name: "Free Credits",
+          id: 300
+        },
+        {
+          id:5
+        }
+      ]
+    },
+    {
+      name: 'Node.js',
+      id: 2,
+      parts: [
+        {
+          name: 'Routing',
+          exercises: 3,
+          id: 1
+        },
+        {
+          name: 'Middlewares',
+          exercises: 7,
+          id: 2
+        }
+      ]
+    }
+  ]
 
   return (
     <div>
-      <Course course={course} />
+      <Courses courses={courses} />
     </div>
   )
 }
