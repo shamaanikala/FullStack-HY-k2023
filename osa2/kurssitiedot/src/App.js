@@ -57,7 +57,7 @@ const Course = ({course}) => {
   console.log('Toimiiko dekonstruktoitu course',course)
   return (
     <>
-      <CourseHeader course={course.name} />
+      <CourseHeader name={course.name} />
       <Content parts={course.parts} />
       <Total parts={course.parts} />
     </>
