@@ -5,12 +5,12 @@ const Header = (props) => {
   )
 }
 
-const Part = (props) => {
-  console.log(props)
+const Part = ({part}) => {
+  console.log(part)
   return (
     <>
       <p>
-        {props.part.name} {props.part.exercises}
+        {part.name} {part.exercises} <i>{part.description}</i>
       </p>
     </>
   )
@@ -84,6 +84,13 @@ const App = () => {
         description: "Laskennan mallien mallinnus",
         exercises: 666,
         id: 1640
+      },
+      {
+        name: "Free Credits",
+        id: 300
+      },
+      {
+        id:4
       }
   ]
 }
