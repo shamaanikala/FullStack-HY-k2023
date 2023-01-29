@@ -74,6 +74,12 @@ const App = () => {
         name: 'State of a component',
         exercises: 14,
         id: 3
+      },
+      {
+        name: "Lamaannus",
+        description: "Laskennan mallien mallinnus",
+        exercises: 666,
+        id: 4
       }
   ]
 }
