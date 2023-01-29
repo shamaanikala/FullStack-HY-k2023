@@ -17,6 +17,7 @@ const Part = (props) => {
 }
 
 // Tämä renderöi kaiken yhdellä kertaa
+// Onko tämä huono tapa antaa taulukolla tiedot?
 const Content = (props) => {
   console.log(props)
   return (
@@ -28,6 +29,9 @@ const Content = (props) => {
   )
 }
 
+// total lasketaan mallivastauksissa App-
+// komponentissa annettujen exercisesX summana, joka 
+// annetaan totallille propsina
 const Total = (props) => {
   console.log(props)
   console.log('Tulostetaan forEach taulukosta:')
@@ -37,6 +41,17 @@ const Total = (props) => {
   const summa = props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises
   return (
     <p>Number of exercises {summa}</p>
+  )
+}
+
+const Course = ({course}) => {
+  console.log('Toimiiko dekonstruktoitu course',course)
+  return (
+    <>
+      <Header course={course.name} />
+      <Content parts={course.parts} />
+      <Total parts={course.parts} />
+    </>
   )
 }
 
@@ -65,12 +80,7 @@ const App = () => {
 
   return (
     <div>
-      <Header course={course.name} />
-      
-      <Content parts={course.parts} />
-
-      <Total parts={course.parts} />
-      
+      <Course course={course} />
     </div>
   )
 }
