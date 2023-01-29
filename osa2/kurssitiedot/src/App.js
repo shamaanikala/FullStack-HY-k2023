@@ -17,17 +17,21 @@ const Part = (props) => {
 }
 
 // Tämä renderöi kaiken yhdellä kertaa
-// Onko tämä huono tapa antaa taulukolla tiedot?
-const Content = (props) => {
-  console.log(props)
+const Content = ({parts}) => {
+  //console.log(parts)
+  //console.log('Toimiiko mappaus?')
+  //console.log(parts.map(p => <Part part={p} />))
+  console.log('Tulostetaan part id:t')
+  console.log(parts.map(p => p.id))
   return (
     <div>
-      <Part part={props.parts[0]}  />
-      <Part part={props.parts[1]}  />
-      <Part part={props.parts[2]}  />
+      {parts.map(p => <Part key={p.id} part={p} />)}
     </div>
   )
 }
+//<Part part={parts.parts[0]}  />
+//<Part part={parts.parts[1]}  />
+//<Part part={parts.parts[2]}  />
 
 // total lasketaan mallivastauksissa App-
 // komponentissa annettujen exercisesX summana, joka 
@@ -79,7 +83,7 @@ const App = () => {
         name: "Lamaannus",
         description: "Laskennan mallien mallinnus",
         exercises: 666,
-        id: 4
+        id: 1640
       }
   ]
 }
