@@ -56,7 +56,7 @@ const Total = ({parts}) => {
   },0)
   console.log('Tehtävien summa',summa)
   return (
-    <p>Number of exercises {summa}</p>
+    <p><b>total of exercises {summa}</b></p>
   )
 }
 
