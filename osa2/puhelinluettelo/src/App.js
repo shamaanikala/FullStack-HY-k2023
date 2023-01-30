@@ -14,18 +14,28 @@ const App = () => {
   const addPerson = (event) => {
     console.log('Lisätään henkilö',event)
     event.preventDefault()
-    const personObject = {
-      name: newName
-    }
+    // olisiko filter tyylikkäämpi eli jos filter tuottaa epätyhjän taulukon
+    console.log(persons.filter(p => p.name === newName).length)
+    console.log('ehto',persons.findIndex((elem) => {console.log(elem.name)}))
+    if (persons.findIndex((elem) => elem.name === newName) !== -1) {
+      console.log('if-lauseessa')
+      alert(`${newName} is already added to phonebook`)
 
-    setPersons(persons.concat(personObject))
-    setNewName('')
+      }
+    else {
+      const personObject = {
+        name: newName
+      }
+      setPersons(persons.concat(personObject))
+      setNewName('')
+    }
   }
 
   const handleNameField = (event) => {
     console.log('nimisyöte',event.target.value)
     setNewName(event.target.value)
   }
+
 
   return (
     <div>
