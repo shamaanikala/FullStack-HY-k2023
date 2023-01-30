@@ -50,6 +50,10 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <div>
+        <i>Filterlomake tähän</i>
+      </div>
+      <h2>add a new</h2>
       <div>debug: {newName}</div>
       <form onSubmit={addPerson}>
         <div>
