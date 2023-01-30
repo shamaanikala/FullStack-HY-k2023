@@ -26,6 +26,13 @@ const PersonForm = ({onSubmit,nameValue,nameHandler,numberValue,numberHandler}) 
   )
 }
 
+const Person = ({person}) => {
+  console.log('renderöidään henkilö',person)
+  return (
+    <p>{person.name} {person.number}</p>
+  )
+}
+
 const App = () => {
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas', number: '040-123456' },
@@ -114,7 +121,7 @@ const App = () => {
       />
       
       <h2>Numbers</h2>
-      <div>{personsToShow.map(p => <p key={p.name}>{p.name} {p.number}</p>)}</div>
+      <div>{personsToShow.map(p => <Person key={p.name} person={p} />)}</div>
     </div>
   );
 }
