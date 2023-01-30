@@ -10,6 +10,22 @@ const Filter = ({value,onChangeHandler}) => {
   )
 }
 
+const PersonForm = ({onSubmit,nameValue,nameHandler,numberValue,numberHandler}) => {
+  return (
+    <form onSubmit={onSubmit}>
+        <div>
+          name: <input value={nameValue} onChange={nameHandler} />
+        </div>
+        <div>
+          number: <input value={numberValue} onChange={numberHandler} />
+        </div>
+        <div>
+          <button type="submit">add</button>
+        </div>
+      </form>
+  )
+}
+
 const App = () => {
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas', number: '040-123456' },
@@ -89,7 +105,23 @@ const App = () => {
       <Filter value={filterValue} onChangeHandler={handleFilterField} />
       <h2>add a new</h2>
       <div>debug: {newName}</div>
-      <form onSubmit={addPerson}>
+      <PersonForm 
+        onSubmit={addPerson}
+        nameValue={newName}
+        nameHandler={handleNameField}
+        numberValue={newNumber}
+        numberHandler={handleNumberField}
+      />
+      
+      <h2>Numbers</h2>
+      <div>{personsToShow.map(p => <p key={p.name}>{p.name} {p.number}</p>)}</div>
+    </div>
+  );
+}
+
+//<div>{persons.map(p => <p key={p.name}>{p.name} {p.number}</p>)}</div>
+    
+{/* <form onSubmit={addPerson}>
         <div>
           name: <input value={newName} onChange={handleNameField} />
         </div>
@@ -99,14 +131,5 @@ const App = () => {
         <div>
           <button type="submit">add</button>
         </div>
-      </form>
-      <h2>Numbers</h2>
-      <div>{personsToShow.map(p => <p key={p.name}>{p.name} {p.number}</p>)}</div>
-    </div>
-  );
-}
-
-//<div>{persons.map(p => <p key={p.name}>{p.name} {p.number}</p>)}</div>
-    
-
+      </form> */}
 export default App;
