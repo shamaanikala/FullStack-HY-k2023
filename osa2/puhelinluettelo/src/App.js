@@ -33,6 +33,16 @@ const Person = ({person}) => {
   )
 }
 
+const Persons = ({personsToShow}) => {
+  console.log('Henkilöiden piirto',personsToShow)
+
+  return (
+    <div>
+      {personsToShow.map(p => <Person key={p.name} person={p} />)}
+    </div>
+  )
+}
+
 const App = () => {
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas', number: '040-123456' },
@@ -121,7 +131,7 @@ const App = () => {
       />
       
       <h2>Numbers</h2>
-      <div>{personsToShow.map(p => <Person key={p.name} person={p} />)}</div>
+      <Persons personsToShow={personsToShow} />
     </div>
   );
 }
