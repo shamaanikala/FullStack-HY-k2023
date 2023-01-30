@@ -114,14 +114,14 @@ const App = () => {
     handleFilter(event.target.value)
   }
 
-  
+  //<div>debug: {newName}</div>
 
   return (
     <div>
       <h2>Phonebook</h2>
       <Filter value={filterValue} onChangeHandler={handleFilterField} />
       <h2>add a new</h2>
-      <div>debug: {newName}</div>
+      
       <PersonForm 
         onSubmit={addPerson}
         nameValue={newName}
@@ -130,23 +130,11 @@ const App = () => {
         numberHandler={handleNumberField}
       />
       
-      <h2>Numbers</h2>
+      <h3>Numbers</h3>
       <Persons personsToShow={personsToShow} />
     </div>
   );
 }
 
-//<div>{persons.map(p => <p key={p.name}>{p.name} {p.number}</p>)}</div>
     
-{/* <form onSubmit={addPerson}>
-        <div>
-          name: <input value={newName} onChange={handleNameField} />
-        </div>
-        <div>
-          number: <input value={newNumber} onChange={handleNumberField} />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form> */}
 export default App;
