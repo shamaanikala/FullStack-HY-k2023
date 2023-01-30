@@ -9,6 +9,8 @@ const App = () => {
   ])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
+  const [filterValue, setFilterValue] = useState('')
+  const [showAll, setShowAll] = useState(true)
 
   // TODO 29.1.2023 19.52
   // TODO: Koska nimiä käytetään id:nä, niin
@@ -47,11 +49,37 @@ const App = () => {
     setNewNumber(event.target.value)
   }
 
+  const personsToShow = showAll
+    ? persons
+    : persons.filter(p => p.name.includes(filterValue))
+
+  const handleFilter = (value) => {
+    console.log(value,value.length)
+    if (value.length === 0) {
+      setFilterValue('')
+      setShowAll(true)
+    }
+    else {
+      setFilterValue(value)
+      setShowAll(false)
+    }
+
+  }
+
+  const handleFilterField = (event) => {
+    console.log('filter',event)
+    handleFilter(event.target.value)
+  }
+
+  
+
   return (
     <div>
       <h2>Phonebook</h2>
       <div>
-        <i>Filterlomake tähän</i>
+        <p>
+          filter shown with <input value={filterValue} onChange={handleFilterField} />
+        </p>
       </div>
       <h2>add a new</h2>
       <div>debug: {newName}</div>
@@ -67,9 +95,12 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
-      <div>{persons.map(p => <p key={p.name}>{p.name} {p.number}</p>)}</div>
+      <div>{personsToShow.map(p => <p key={p.name}>{p.name} {p.number}</p>)}</div>
     </div>
   );
 }
+
+//<div>{persons.map(p => <p key={p.name}>{p.name} {p.number}</p>)}</div>
+    
 
 export default App;
