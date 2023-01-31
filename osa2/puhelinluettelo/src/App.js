@@ -65,8 +65,9 @@ const App = () => {
     event.preventDefault()
     // olisiko filter tyylikkäämpi eli jos filter tuottaa epätyhjän taulukon
     console.log(persons.filter(p => p.name === newName).length)
-    console.log('ehto',persons.findIndex((elem) => {console.log(elem.name)}))
-    if (persons.findIndex((elem) => elem.name === newName) !== -1) {
+    //console.log('ehto',persons.findIndex((elem) => {console.log(elem.name)}))
+    //if (persons.findIndex((elem) => elem.name === newName) !== -1) {
+    if (persons.filter(p => p.name === newName).length > 0) {
       console.log('if-lauseessa')
       alert(`${newName} is already added to phonebook`)
 
