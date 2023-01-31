@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const Filter = ({value,onChangeHandler}) => {
   return (
@@ -44,22 +45,22 @@ const Persons = ({personsToShow}) => {
 }
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456' },
-    { name: 'Ada Lovelace', number: '39-44-5323523' },
-    { name: 'Dan Abramov', number: '12-43-234345' },
-    { name: 'Mary Poppendieck', number: '39-23-6423122' }
-  ])
+  const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filterValue, setFilterValue] = useState('')
   const [showAll, setShowAll] = useState(true)
 
-  // TODO 29.1.2023 19.52
-  // TODO: Koska nimiä käytetään id:nä, niin
-  // lisää tarkistus, että nimet pysyvät yksikäsitteisinä
-  // tai lisää id:t, joilla erottaa täyskaimat toisistaan.
-  // Reactille on pakko olla yksikäsitteinen key
+  useEffect(() => {
+    console.log('useEffect')
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        console.log('promise fulfilled - tietokanta haettu')
+        setPersons(response.data)
+      })
+  }, []) // tyhjä taulukko toisena eli suoritetaan vain kerran
+
   const addPerson = (event) => {
     console.log('Lisätään henkilö',event)
     event.preventDefault()
