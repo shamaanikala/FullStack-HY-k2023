@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import personService from './services/persons'
 
 const Filter = ({value,onChangeHandler}) => {
   return (
@@ -53,11 +53,11 @@ const App = () => {
 
   useEffect(() => {
     console.log('useEffect')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
+    personService
+      .getAll()
+      .then(initialPersons => {
         console.log('promise fulfilled - tietokanta haettu')
-        setPersons(response.data)
+        setPersons(initialPersons)
       })
   }, []) // tyhjä taulukko toisena eli suoritetaan vain kerran
 
@@ -78,11 +78,11 @@ const App = () => {
         name: newName,
         number: newNumber
       }
-      axios
-        .post('http://localhost:3001/persons',personObject)
-        .then(response => {
-          console.log(response)
-          setPersons(persons.concat(response.data))
+      personService
+        .create(personObject)
+        .then(returnedPersons => {
+          console.log(returnedPersons)
+          setPersons(persons.concat(returnedPersons))
           setNewName('')
           setNewNumber('')
         })
