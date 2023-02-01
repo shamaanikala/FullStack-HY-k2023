@@ -29,10 +29,11 @@ const PersonForm = ({onSubmit,nameValue,nameHandler,numberValue,numberHandler}) 
 
 const Person = ({person,removePerson}) => {
   console.log('renderöidään henkilö',person)
+  // muista key <button>ille
   return (
     <p>
       {person.name} {person.number}
-      <button onClick={removePerson}>delete</button>
+      <button key={person.id} onClick={removePerson}>delete</button>
     </p>
   )
 }
@@ -93,7 +94,26 @@ const App = () => {
   }
 
   const removePerson = id => {
-    console.log(`Yritetään poistaa henkilö ${id}`)
+    const removed = persons.find(p => p.id == id)
+    console.log(`Yritetään poistaa henkilö ${removed.name}`)
+    if(window.confirm(`Delete ${removed.name} ?`)) {
+      console.log(`TODO - poistetaan henkilö ${removed.name} tietokannasta.`)
+      personService
+        .remove(id).then(response => {
+          console.log('setPersons')
+          if (response.status === 200) {
+            console.log('Henkilö poistettu onnistuneesti')
+            setPersons(persons.filter(p => p.id !== id))
+          }
+          //setPersons(returnedPersons)
+          //setPersons(persons.map(p => p.id !== id ? p : returnedPersons))
+          //console.log('ilman setPersons')
+        })
+        console.log('poistettu, tila: ',persons,id)
+    }
+    else console.log(`Ei poisteta henkilöä ${removed.name}.`)
+
+    console.log('removePerson loppujutut')
   }
 
   const handleNameField = (event) => {

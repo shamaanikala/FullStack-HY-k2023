@@ -19,7 +19,10 @@ const update = (id, newObject) => {
 const remove = (id) => {
     console.log(`Yritetään poistaa yhteistieto ${id}`)
     const request = axios.delete(`${baseUrl}/${id}`)
-    return request.then(response => response.data)
+    return request.then(response => {
+        console.log(`remove response: ${response.data}`,{...response});
+        return response
+    })
 }
 
 export default { getAll, create, update, remove }
