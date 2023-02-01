@@ -72,12 +72,43 @@ const App = () => {
     console.log(persons.filter(p => p.name === newName).length)
     //console.log('ehto',persons.findIndex((elem) => {console.log(elem.name)}))
     //if (persons.findIndex((elem) => elem.name === newName) !== -1) {
-    if (persons.filter(p => p.name === newName).length > 0) {
-      console.log('if-lauseessa')
-      alert(`${newName} is already added to phonebook`)
+    const dublicateName = persons.filter(p => p.name === newName).length > 0
+    const dublicateNumber = persons.filter(p => p.number === newNumber).length > 0
+    if (dublicateName && dublicateNumber) {
+      // console.log('if-lauseessa, samanniminen löydetty!')
+      // if (!persons.filter(p => p.number === newNumber).length > 0) {
+      //   if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+      //     console.log('Vaihdetaan puelinnumero')
 
+      //   }
+      //   else console.log('Ei vaihdeta')
+      // }
+      console.log('Myös numero sama -> alert ja pois')
+      alert(`${newName} is already added to phonebook`)
       }
+    else if (dublicateName && !dublicateNumber) {
+      console.log('sama nimi ja eri numero -> vaihtokysely')
+      if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+        console.log('Vaihdetaan puelinnumero')
+        // id yksikäsitteisen nimen kautta updatea varten
+        const person = persons.find(p => p.name === newName)
+        const id = person.id
+        const updatedPerson = {...person, number: newNumber }
+
+        personService
+          .update(id,updatedPerson).then(returnedPerson => {
+            setPersons(persons.map(p => p.id !== id ? p : returnedPerson))
+          })
+          .catch(error => {
+            alert(
+              `Somethng went wrong when updating the phone number: ${{...error}}`
+            )
+          })
+      }
+        else console.log('Ei vaihdeta')
+    }
     else {
+      console.log('Lisätään uusi henkilö')
       const personObject = {
         name: newName,
         number: newNumber
