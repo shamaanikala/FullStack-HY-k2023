@@ -27,19 +27,22 @@ const PersonForm = ({onSubmit,nameValue,nameHandler,numberValue,numberHandler}) 
   )
 }
 
-const Person = ({person}) => {
+const Person = ({person,removePerson}) => {
   console.log('renderöidään henkilö',person)
   return (
-    <p>{person.name} {person.number}</p>
+    <p>
+      {person.name} {person.number}
+      <button onClick={removePerson}>delete</button>
+    </p>
   )
 }
 
-const Persons = ({personsToShow}) => {
+const Persons = ({personsToShow, removePerson }) => {
   console.log('Henkilöiden piirto',personsToShow)
 
   return (
     <div>
-      {personsToShow.map(p => <Person key={p.name} person={p} />)}
+      {personsToShow.map(p => <Person key={p.name} person={p} removePerson={() => removePerson(p.id)} />)}
     </div>
   )
 }
@@ -87,6 +90,10 @@ const App = () => {
           setNewNumber('')
         })
     }
+  }
+
+  const removePerson = id => {
+    console.log(`Yritetään poistaa henkilö ${id}`)
   }
 
   const handleNameField = (event) => {
@@ -138,7 +145,7 @@ const App = () => {
       />
       
       <h3>Numbers</h3>
-      <Persons personsToShow={personsToShow} />
+      <Persons personsToShow={personsToShow} removePerson={removePerson} />
     </div>
   );
 }
