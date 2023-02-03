@@ -204,6 +204,27 @@ const App = () => {
           //setPersons(persons.map(p => p.id !== id ? p : returnedPersons))
           //console.log('ilman setPersons')
         })
+        .catch(error => {
+          setNotificationType('error')
+          console.log(error)
+          console.log(error.code)
+          const errorMsg = error.code === 'ERR_BAD_REQUEST'
+            ? `Information of ${removed.name} has already been removed from the server.`
+            : `Something went wrong while updating the phone number of ${removed.name}: ${error}`
+
+          setNotificationMessage(
+            errorMsg
+          )
+          setTimeout(() => {
+            setNotificationMessage(null)
+            setNotificationType(null)
+          }, 5000)
+          // alert(
+          //   `Somethng went wrong when updating the phone number: ${{...error}}`
+          // )
+          // poistettu pois näkyvistä
+          setPersons(persons.filter(p => p.id !== id))
+        })
         console.log('poistettu, tila: ',persons,id)
     }
     else console.log(`Ei poisteta henkilöä ${removed.name}.`)
