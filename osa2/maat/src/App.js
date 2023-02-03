@@ -1,15 +1,24 @@
 import { useState, useEffect } from "react";
 
-const App = () => {
+const App = ({dummyCountries}) => {
 
-  const defaultCountiresString = 'Search for country information'
+  const defaultHelpString = 'Search for country information'
+  const tooManyString = 'Too many matches, specify another filter'
   const [query, setQuery] = useState('');
-  const [countries,setCountries] = useState(defaultCountiresString)
+  const [searchHelp, setSearchHelp] = useState(null)
+  const [countries,setCountries] = useState(null)
 
   const handleQueryField = event => {
     console.log('Hakukenttä',event.target.value)
+    setQuery(event.target.value)
+    handleSearchHelp(event.target.value)
+  }
 
-    setQuery(event.target.value) 
+  const handleSearchHelp = queryValue => {
+    const helper = queryValue.length === 0
+      ? defaultHelpString
+      : tooManyString
+      setSearchHelp(helper)
   }
 
   // const countriesToShow = 
@@ -18,6 +27,9 @@ const App = () => {
   return (
     <div>
         find countries <input type="text" value={query} onChange={handleQueryField} />
+        <div>
+          {searchHelp}
+        </div>
         <div>
           {countries}
         </div>
