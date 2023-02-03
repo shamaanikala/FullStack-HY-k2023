@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 const CountryName = ({selectedCountry}) => {
   return (
     <>
-      <p key={selectedCountry.fifa}>{selectedCountry.name.common}</p>
+      <div key={selectedCountry.fifa}>{selectedCountry.name.common}</div>
     </>
   )
 }
@@ -12,7 +12,7 @@ const CountryName = ({selectedCountry}) => {
 const CountryList = ({selectedCountries}) => {
   if (selectedCountries.length > 10) {
     return (
-      <p>Too many matches, specify another filter</p>
+      <div>Too many matches, specify another filter</div>
     )
   }
   // https://stackoverflow.com/questions/39549424/how-to-create-unique-keys-for-react-elements
