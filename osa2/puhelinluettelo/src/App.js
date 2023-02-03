@@ -99,7 +99,15 @@ const App = () => {
       //   else console.log('Ei vaihdeta')
       // }
       console.log('Myös numero sama -> alert ja pois')
-      alert(`${newName} is already added to phonebook`)
+      //alert(`${newName} is already added to phonebook`)
+      setNotificationType('error')
+      setNotificationMessage(
+        `${newName} already exists in the phonebook!`
+        )
+        setTimeout(() => {
+          setNotificationMessage(null)
+          setNotificationType(null)
+        },5000)
       }
     else if (dublicateName && !dublicateNumber) {
       console.log('sama nimi ja eri numero -> vaihtokysely')
