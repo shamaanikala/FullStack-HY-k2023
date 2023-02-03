@@ -75,7 +75,8 @@ const App = () => {
   useEffect(() => {
     console.log('useEffect')
     axios
-      .get('http://localhost:3001/countryData')
+      .get('http://localhost:3001/countryData') // local
+      //.get('https://restcountries.com/v3.1/all')
       .then(response => {
         console.log(response)
         console.log(response.data)
