@@ -1,14 +1,32 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 
+const CountryName = ({selectedCountry}) => {
+  return (
+    <>
+      <p key={selectedCountry.fifa}>{selectedCountry.name.common}</p>
+    </>
+  )
+}
+
+const CountryList = ({selectedCountries}) => {
+  return (
+    <div>
+      {selectedCountries.map(
+        c => <CountryName key={c.id} selectedCountry={c} />
+      )}
+    </div>
+  )
+}
+
 const App = () => {
 
-  const defaultHelpString = 'Search for country information'
-  const tooManyString = 'Too many matches, specify another filter'
+  const defaultInfoString = 'Search for country information'
+  const tooManyInfoString = 'Too many matches, specify another filter'
   const [query, setQuery] = useState('');
-  const [searchHelp, setSearchHelp] = useState(null)
+  const [infoMessage, setInfoMessage] = useState(defaultInfoString)
   const [countries,setCountries] = useState([])
-  const [selectedCountries,setSelectedCountries] = useState(null)
+  const [selectedCountries,setSelectedCountries] = useState([])
 
   // koska vain get, joten ei tehtä vielä erillistä serviceä
   useEffect(() => {
@@ -22,18 +40,31 @@ const App = () => {
       })
   },[])
 
+  const selectCountries = (countries,query) => {
+    console.log('selectCountries',countries[1])
+    setSelectedCountries([].concat(
+      countries[1]
+    ))
+  }
+
   const handleQueryField = event => {
     console.log('Hakukenttä',event.target.value)
     setQuery(event.target.value)
-    //handleSearchHelp(event.target.value)
+    selectCountries(countries,event.target.value)
+    handleInfoMessage(event.target.value,selectedCountries)
   }
 
-  // const handleSearchHelp = queryValue => {
-  //   const helper = queryValue.length === 0
-  //     ? defaultHelpString
-  //     : tooManyString
-  //     setSearchHelp(helper)
-  // }
+
+  const handleInfoMessage = (queryValue,countriesToShow) => {
+    let helper = defaultInfoString
+    if (queryValue.length > 0) {
+      const helper = countriesToShow.length > 10
+        ? tooManyInfoString
+        : null
+    }
+    console.log('helper',helper)
+    setInfoMessage(helper)
+  }
 
   // const countriesToShow = 
   // const handleQuery = value => {}
@@ -42,10 +73,10 @@ const App = () => {
     <div>
         find countries <input type="text" value={query} onChange={handleQueryField} />
         <div>
-          {searchHelp}
+          {infoMessage}
         </div>
         <div>
-          {selectedCountries}
+          <CountryList selectedCountries={selectedCountries} />
         </div>
     </div>
   );
