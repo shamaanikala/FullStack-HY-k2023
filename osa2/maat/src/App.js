@@ -9,7 +9,42 @@ const CountryName = ({selectedCountry}) => {
   )
 }
 
+const SingleCountryInformation = ({selectedCountry}) => {
+  const country = selectedCountry
+  // Object.values()
+  //https://stackoverflow.com/questions/41486296/convert-object-to-array-in-javascript-react
+  console.log(country.flags.png)
+  return (
+    <div>
+      <h2>{country.name.common}</h2>
+      <div>
+        capital {country.capital[0]}<br />
+        area {country.area}
+      </div>
+      <div>
+        <h3>languages</h3>
+        <div>
+          <ul>
+            {Object.values(country.languages).map(
+              (lan,ind) => <li key={ind}>{lan}</li>
+            )}
+          </ul>
+        </div>
+      </div>
+      <div>
+        <img src={country.flags.png} alt={country.flags.alt} />
+      </div>
+
+    </div>
+  )
+}
+
 const CountryList = ({selectedCountries}) => {
+  if (selectedCountries.length === 1) {
+    return (
+      <SingleCountryInformation selectedCountry={selectedCountries[0]} />
+    )
+  }
   if (selectedCountries.length > 10) {
     return (
       <div>Too many matches, specify another filter</div>
@@ -24,6 +59,8 @@ const CountryList = ({selectedCountries}) => {
     </div>
   )
 }
+
+
 
 const App = () => {
 
