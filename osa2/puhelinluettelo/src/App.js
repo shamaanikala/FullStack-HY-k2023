@@ -48,12 +48,27 @@ const Persons = ({personsToShow, removePerson }) => {
   )
 }
 
+const Notification = ({message, className }) => {
+  if (message === null) {
+    return null
+  }
+  console.log('Piirretään Notification',message,className)
+  return (
+    <div className={className}>
+      {message}
+    </div>
+  )
+}
+
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filterValue, setFilterValue] = useState('')
   const [showAll, setShowAll] = useState(true)
+  const [notificationMessage, setNotificationMessage] = useState(null)//useState('something noteworthy happened...')
+  // notificationType: error, numberUpdateSuccess, additionSuccess
+  const [notificationType, setNotificationType] = useState('')
 
   useEffect(() => {
     console.log('useEffect')
@@ -100,9 +115,15 @@ const App = () => {
             setPersons(persons.map(p => p.id !== id ? p : returnedPerson))
           })
           .catch(error => {
-            alert(
-              `Somethng went wrong when updating the phone number: ${{...error}}`
+            setNotificationMessage(
+              `Something went wrong while updating the phone number of ${newName}: ${{...error}}`
             )
+            setTimeout(() => {
+              setNotificationMessage(null)
+            }, 5000)
+            // alert(
+            //   `Somethng went wrong when updating the phone number: ${{...error}}`
+            // )
           })
       }
         else console.log('Ei vaihdeta')
@@ -118,10 +139,19 @@ const App = () => {
         .then(returnedPersons => {
           console.log(returnedPersons)
           setPersons(persons.concat(returnedPersons))
+          setNotificationType('additionSuccess')
+          setNotificationMessage(
+            `Added ${newName}`
+            )
+            setTimeout(() => {
+              setNotificationMessage(null)
+              setNotificationType(null)
+            },5000)
+          })
+
           setNewName('')
           setNewNumber('')
-        })
-    }
+              }
   }
 
   const removePerson = id => {
@@ -183,6 +213,7 @@ const App = () => {
 
   return (
     <div>
+      <Notification message={notificationMessage} className={notificationType} />
       <h2>Phonebook</h2>
       <Filter value={filterValue} onChangeHandler={handleFilterField} />
       <h2>add a new</h2>
