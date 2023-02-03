@@ -2,14 +2,17 @@ import { useState, useEffect } from "react";
 
 const App = () => {
 
-  const [query, setQuery] = useState(null);
+  const [query, setQuery] = useState('');
+  const [countries,setCountries] = useState('Search for country information')
+
+  const handleQueryField = event => {
+    console.log('Hakukenttä',event.target.value)
+    setQuery(event.target.value)
+  }
 
   return (
     <div>
-      <p>
-        find countries
-        <input type="text" value="lol" onChange={() => null} />
-        </p>
+        find countries <input type="text" value={query} onChange={handleQueryField} />
     </div>
   );
 }
