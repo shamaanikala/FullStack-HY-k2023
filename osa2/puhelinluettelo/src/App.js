@@ -113,13 +113,23 @@ const App = () => {
         personService
           .update(id,updatedPerson).then(returnedPerson => {
             setPersons(persons.map(p => p.id !== id ? p : returnedPerson))
+            setNotificationType('updateSuccess')
+            setNotificationMessage(
+              `Updated the phonenumber of ${newName}`
+              )
+              setTimeout(() => {
+                setNotificationMessage(null)
+                setNotificationType(null)
+              },5000)
           })
           .catch(error => {
+            setNotificationType('error')
             setNotificationMessage(
               `Something went wrong while updating the phone number of ${newName}: ${{...error}}`
             )
             setTimeout(() => {
               setNotificationMessage(null)
+              setNotificationType(null)
             }, 5000)
             // alert(
             //   `Somethng went wrong when updating the phone number: ${{...error}}`
@@ -165,6 +175,14 @@ const App = () => {
           if (response.status === 200) {
             console.log('Henkilö poistettu onnistuneesti')
             setPersons(persons.filter(p => p.id !== id))
+            setNotificationType('deleteSuccess')
+            setNotificationMessage(
+              `Deleted ${removed.name}`
+            )
+            setTimeout(() => {
+              setNotificationMessage(null)
+              setNotificationType(null)
+            },5000)
           }
           //setPersons(returnedPersons)
           //setPersons(persons.map(p => p.id !== id ? p : returnedPersons))
