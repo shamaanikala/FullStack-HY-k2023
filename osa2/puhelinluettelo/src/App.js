@@ -132,8 +132,14 @@ const App = () => {
           })
           .catch(error => {
             setNotificationType('error')
+            console.log(error)
+            console.log(error.code)
+            const errorMsg = error.code === 'ERR_BAD_REQUEST'
+              ? `Information of ${newName} has already been removed from the server.`
+              : `Something went wrong while updating the phone number of ${newName}: ${error}`
+
             setNotificationMessage(
-              `Something went wrong while updating the phone number of ${newName}: ${{...error}}`
+              errorMsg
             )
             setTimeout(() => {
               setNotificationMessage(null)
@@ -142,6 +148,8 @@ const App = () => {
             // alert(
             //   `Somethng went wrong when updating the phone number: ${{...error}}`
             // )
+            // poistettu pois näkyvistä
+            setPersons(persons.filter(p => p.id !== id))
           })
       }
         else console.log('Ei vaihdeta')
