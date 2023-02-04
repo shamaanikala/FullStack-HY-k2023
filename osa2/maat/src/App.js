@@ -82,9 +82,9 @@ const SingleCountryInformation = ({selectedCountry,capitalWeather,getCapitalWeat
       </div>
       <div>
         <h2>Weather in {country.capital[0]}</h2>
-        <div>temperature {capitalWeather.temp >= 0 ? `+${capitalWeather.temp}` : `${capitalWeather.temp}`} Celsius (feels like {capitalWeather.feels_like} Celsius)</div>
-        <div>SÄÄKUVA</div>
-        <div>TUULI</div>
+        <div>temperature {capitalWeather.temp >= 0 ? `+${capitalWeather.temp}` : `${capitalWeather.temp}`} Celsius (feels like {capitalWeather.feels_like >= 0 ? `+${capitalWeather.feels_like}` : `${capitalWeather.feels_like}`} Celsius)</div>
+        <div><img src={`http://openweathermap.org/img/wn/${capitalWeather.icon}@2x.png`} alt={capitalWeather.alt}></img></div>
+        <div>wind {capitalWeather.wind} m/s</div>
       </div>
     </div>
   )
