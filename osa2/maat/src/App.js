@@ -89,6 +89,8 @@ const App = () => {
   const [countries,setCountries] = useState([])
   const [selectedCountries,setSelectedCountries] = useState([])
 
+  const api_key = process.env.REACT_APP_API_KEY
+
   // koska vain get, joten ei tehtä vielä erillistä serviceä
   useEffect(() => {
     console.log('useEffect')
@@ -110,8 +112,45 @@ const App = () => {
   //
   // 2. Hae säätiedot (https://openweathermap.org/current )
   // https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}
+  
+  // ei voi return!
+  // const getCapitalCoordinates = country => {
+  //   const capitalName = country.capital[0]
+  //   console.log(`Haetaan pääkaupungin ${capitalName} koordinaatit`)
+  //   axios
+  //     .get(`http://api.openweathermap.org/geo/1.0/direct?q=${capitalName}&limit=1&appid=${api_key}`)
+  //     .then(response => {
+  //       console.log('Koordinaatit haettu')
+  //       console.log(response)
+  //       console.log(response.data) // geodata on taulukossa
+  //       console.log('Lat',response.data[0].lat)
+  //       console.log('Lon',response.data[0].lon)
+  //       return response.data[0]
+  //     })
+
+  // }
+
   const getCapitalWeather = country => {
-      console.log(`Haetaan säätiedot ${country.name.common} pääkaupungille ${country.capital[0]}`)
+    const capitalName = country.capital[0]
+    console.log(`Haetaan säätiedot ${country.name.common} pääkaupungille ${capitalName}`)
+    //let geo_coords = {"lat" : 0.0, "lon": 0.0} //default
+    let geo_coords = null //aluksi näin
+    axios
+      .get(`http://api.openweathermap.org/geo/1.0/direct?q=${capitalName}&limit=1&appid=${api_key}`)
+      .then(response => {
+        if (response.status === 200) {
+          console.log('Koordinaatit haettu')
+        console.log(response)
+        console.log(response.data) // geodata on taulukossa
+        console.log('Lat',response.data[0].lat)
+        console.log('Lon',response.data[0].lon)
+        geo_coords = {...response.data[0]}
+        console.log(geo_coords)
+        console.log(`Haetaan säätä koordinaateista (lat,lon) = (${geo_coords.lat},${geo_coords.lon})`)  
+        }
+      })
+      
+     
   }
 
   const selectCountries = (countries,queryValue) => {
