@@ -129,8 +129,8 @@ const App = () => {
   useEffect(() => {
     console.log('useEffect')
     axios
-      .get('http://localhost:3001/countryData') // local
-      //.get('https://restcountries.com/v3.1/all')
+      //.get('http://localhost:3001/countryData') // local
+      .get('https://restcountries.com/v3.1/all')
       .then(response => {
         console.log(response)
         console.log(response.data)
@@ -147,24 +147,6 @@ const App = () => {
   // 2. Hae säätiedot (https://openweathermap.org/current )
   // https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}
   
-  // ei voi return!
-  // Ei jaksa säätää tilojen kanssa, joten tehdään kaikki alempana yhdessä funktiossa
-  // const getCapitalCoordinates = country => {
-  //   const capitalName = country.capital[0]
-  //   console.log(`Haetaan pääkaupungin ${capitalName} koordinaatit`)
-  //   axios
-  //     .get(`http://api.openweathermap.org/geo/1.0/direct?q=${capitalName}&limit=1&appid=${api_key}`)
-  //     .then(response => {
-  //       console.log('Koordinaatit haettu')
-  //       console.log(response)
-  //       console.log(response.data) // geodata on taulukossa
-  //       console.log('Lat',response.data[0].lat)
-  //       console.log('Lon',response.data[0].lon)
-  //       return response.data[0]
-  //     })
-
-  // }
-
   // 4.2.2023 13.20 looppaa, eli tila, joka kertoo onko tiedot jo haettu
   // tarkistetaan myös säätietojen dt kentästä, että onko tieto yli 5 min vanha
   // JSONnin aikaleimasta puuttuu 1000, joten se on sekunteina
@@ -235,7 +217,7 @@ const App = () => {
       })
       
     }
-    //return capitalWeather
+    return capitalWeather
   }
 
   const selectCountries = (countries,queryValue) => {
