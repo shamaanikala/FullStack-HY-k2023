@@ -22,12 +22,44 @@ const CountryName = ({selectedCountry,handleShowButton}) => {
   )
 }
 
-const SingleCountryInformation = ({selectedCountry,getCapitalWeather}) => {
+const SingleCountryInformation = ({selectedCountry,capitalWeather,getCapitalWeather}) => {
+  console.log('Aloitetaan SingleCountryInformation piirto')
   const country = selectedCountry
   // Object.values()
   //https://stackoverflow.com/questions/41486296/convert-object-to-array-in-javascript-react
   console.log(country.flags.png)
-  getCapitalWeather(country)
+  if (capitalWeather === null || capitalWeather.countryName !== country.name.common) {
+    getCapitalWeather(country)
+  }
+  if (capitalWeather === null) {
+    return (
+      <div>
+        <h1>{country.name.common}</h1>
+        <div>
+          capital {country.capital[0]}<br />
+          area {country.area}
+        </div>
+        <div>
+          <h3>languages</h3>
+          <div>
+            <ul>
+              {Object.values(country.languages).map(
+                (lan,ind) => <li key={ind}>{lan}</li>
+              )}
+            </ul>
+          </div>
+        </div>
+        <div>
+          <img src={country.flags.png} alt={country.flags.alt} />
+        </div>
+        <div>
+          <h2>Weather in {country.capital[0]}</h2>
+          <div><i>Data missing</i></div>
+        </div>
+      </div>
+    )
+  }
+  else {
   return (
     <div>
       <h1>{country.name.common}</h1>
@@ -50,18 +82,19 @@ const SingleCountryInformation = ({selectedCountry,getCapitalWeather}) => {
       </div>
       <div>
         <h2>Weather in {country.capital[0]}</h2>
-        <div>temperature "LUKU" "ASTE"</div>
+        <div>temperature {capitalWeather.temp >= 0 ? `+${capitalWeather.temp}` : `${capitalWeather.temp}`} Celsius (feels like {capitalWeather.feels_like} Celsius)</div>
         <div>SÄÄKUVA</div>
         <div>TUULI</div>
       </div>
     </div>
   )
+  }
 }
-
-const CountryList = ({selectedCountries,handleShowButton,getCapitalWeather}) => {
+     
+const CountryList = ({selectedCountries,handleShowButton,capitalWeather,getCapitalWeather}) => {
   if (selectedCountries.length === 1) {
     return (
-      <SingleCountryInformation selectedCountry={selectedCountries[0]} getCapitalWeather={getCapitalWeather} />
+      <SingleCountryInformation selectedCountry={selectedCountries[0]} capitalWeather={capitalWeather} getCapitalWeather={getCapitalWeather} />
     )
   }
   if (selectedCountries.length > 10) {
@@ -186,7 +219,7 @@ const App = () => {
                   countryName: countryName,
                   capitalName: capitalName,
                   temp: data.main.temp,
-                  temp_feels_like: data.main.feels_like,
+                  feels_like: data.main.feels_like,
                   icon: data.weather[0].icon,
                   alt: data.weather[0].main,
                   description: data.weather[0].description,
@@ -195,12 +228,14 @@ const App = () => {
                 }
                 console.log('säätietoobj',capitalWeatherObject)
                 setCapitalWeather(capitalWeatherObject)
+                return capitalWeatherObject
               }
             })
           }
       })
       
     }
+    //return capitalWeather
   }
 
   const selectCountries = (countries,queryValue) => {
@@ -268,7 +303,11 @@ const App = () => {
           {infoMessage}
         </div>
         <div>
-          <CountryList selectedCountries={selectedCountries} handleShowButton={handleShowButton} getCapitalWeather={getCapitalWeather} />
+          <CountryList 
+            selectedCountries={selectedCountries}
+            handleShowButton={handleShowButton}
+            capitalWeather={capitalWeather}
+            getCapitalWeather={getCapitalWeather} />
         </div>
     </div>
   );
