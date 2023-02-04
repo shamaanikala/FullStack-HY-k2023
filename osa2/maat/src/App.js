@@ -88,6 +88,7 @@ const App = () => {
   const [infoMessage, setInfoMessage] = useState(defaultInfoString)
   const [countries,setCountries] = useState([])
   const [selectedCountries,setSelectedCountries] = useState([])
+  const [capitalWeather, setCapitalWeather] = useState(null)
 
   const api_key = process.env.REACT_APP_API_KEY
 
@@ -114,6 +115,7 @@ const App = () => {
   // https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}
   
   // ei voi return!
+  // Ei jaksa säätää tilojen kanssa, joten tehdään kaikki alempana yhdessä funktiossa
   // const getCapitalCoordinates = country => {
   //   const capitalName = country.capital[0]
   //   console.log(`Haetaan pääkaupungin ${capitalName} koordinaatit`)
@@ -130,8 +132,26 @@ const App = () => {
 
   // }
 
+  // 4.2.2023 13.20 looppaa, eli tila, joka kertoo onko tiedot jo haettu
+  // tarkistetaan myös säätietojen dt kentästä, että onko tieto yli 5 min vanha
+  // JSONnin aikaleimasta puuttuu 1000, joten se on sekunteina
   const getCapitalWeather = country => {
+    const countryName = country.name.common
     const capitalName = country.capital[0]
+
+    console.log('Tarkistetaan, onko jo pääkaupungin tietoja, jos on niin ei haeta turhaan')
+    if (capitalWeather !== null
+      && capitalWeather.countryName === countryName 
+      && capitalWeather.capitalName === capitalName
+      && (Date.now() - capitalWeather.timestamp*1000)/(1000*60) < 10) {
+      console.log('Tiedot on jo haettu')
+      // console.log('timestamp',capitalWeather.timestamp)
+      // console.log('Date.now()',Date.now())
+      // console.log('Tietojen ikä (ms):',Date.now() - capitalWeather.timestamp*1000)
+      // console.log('Tietojen ikä (s):',((Date.now() - capitalWeather.timestamp*1000)/1000))
+      console.log('Tietojen ikä (min):',((Date.now() - capitalWeather.timestamp*1000)/(1000*60)))
+    }
+    else {
     console.log(`Haetaan säätiedot ${country.name.common} pääkaupungille ${capitalName}`)
     //let geo_coords = {"lat" : 0.0, "lon": 0.0} //default
     let geo_coords = null //aluksi näin
@@ -140,17 +160,47 @@ const App = () => {
       .then(response => {
         if (response.status === 200) {
           console.log('Koordinaatit haettu')
-        console.log(response)
-        console.log(response.data) // geodata on taulukossa
-        console.log('Lat',response.data[0].lat)
-        console.log('Lon',response.data[0].lon)
-        geo_coords = {...response.data[0]}
-        console.log(geo_coords)
-        console.log(`Haetaan säätä koordinaateista (lat,lon) = (${geo_coords.lat},${geo_coords.lon})`)  
-        }
+          console.log(response)
+          console.log(response.data) // geodata on taulukossa
+          console.log('Lat',response.data[0].lat)
+          console.log('Lon',response.data[0].lon)
+          geo_coords = {...response.data[0]}
+          console.log(geo_coords)
+          console.log(`Haetaan säätä koordinaateista (lat,lon) = (${geo_coords.lat},${geo_coords.lon})`)
+          console.log('Simuloidaan GET osoite:',`https://api.openweathermap.org/data/2.5/weather?lat=${geo_coords.lat}&lon=${geo_coords.lon}&units=metric&appid={API key}`)
+          // ei anneta url:ssä mode param, joten saadaan default JSON
+          // laitetaan units=metric, jotta saadaan varmasti Celsius, default on Kelvin!
+          axios
+            .get(`https://api.openweathermap.org/data/2.5/weather?lat=${geo_coords.lat}&lon=${geo_coords.lon}&units=metric&appid=${api_key}`)
+            .then(response=> {
+              if (response.status === 200) {
+                const data = response.data
+                console.log('Säätiedot haettu',`${capitalName}`)
+                console.log('response',response)
+                console.log('response.data',response.data)
+                console.log('Sääobjekt, (taulukko)',response.data.weather)
+                console.log(`Sää ${response.data.weather[0].main},${response.data.weather[0].description},${response.data.weather[0].icon}`)
+                console.log(`Lämpötila: ${data.main.temp} (tuntuu ${data.main.feels_like})`)
+                console.log(`Tuuli: ${data.wind.speed}`)
+                const capitalWeatherObject = {
+                  countryName: countryName,
+                  capitalName: capitalName,
+                  temp: data.main.temp,
+                  temp_feels_like: data.main.feels_like,
+                  icon: data.weather[0].icon,
+                  alt: data.weather[0].main,
+                  description: data.weather[0].description,
+                  wind: data.wind.speed,
+                  timestamp: data.dt
+                }
+                console.log('säätietoobj',capitalWeatherObject)
+                setCapitalWeather(capitalWeatherObject)
+              }
+            })
+          }
       })
       
-     
+    }
   }
 
   const selectCountries = (countries,queryValue) => {
