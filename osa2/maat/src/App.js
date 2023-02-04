@@ -22,14 +22,15 @@ const CountryName = ({selectedCountry,handleShowButton}) => {
   )
 }
 
-const SingleCountryInformation = ({selectedCountry}) => {
+const SingleCountryInformation = ({selectedCountry,getCapitalWeather}) => {
   const country = selectedCountry
   // Object.values()
   //https://stackoverflow.com/questions/41486296/convert-object-to-array-in-javascript-react
   console.log(country.flags.png)
+  getCapitalWeather(country)
   return (
     <div>
-      <h2>{country.name.common}</h2>
+      <h1>{country.name.common}</h1>
       <div>
         capital {country.capital[0]}<br />
         area {country.area}
@@ -47,15 +48,20 @@ const SingleCountryInformation = ({selectedCountry}) => {
       <div>
         <img src={country.flags.png} alt={country.flags.alt} />
       </div>
-
+      <div>
+        <h2>Weather in {country.capital[0]}</h2>
+        <div>temperature "LUKU" "ASTE"</div>
+        <div>SÄÄKUVA</div>
+        <div>TUULI</div>
+      </div>
     </div>
   )
 }
 
-const CountryList = ({selectedCountries,handleShowButton}) => {
+const CountryList = ({selectedCountries,handleShowButton,getCapitalWeather}) => {
   if (selectedCountries.length === 1) {
     return (
-      <SingleCountryInformation selectedCountry={selectedCountries[0]} />
+      <SingleCountryInformation selectedCountry={selectedCountries[0]} getCapitalWeather={getCapitalWeather} />
     )
   }
   if (selectedCountries.length > 10) {
@@ -95,6 +101,18 @@ const App = () => {
         setCountries(countries.concat(response.data))
       })
   },[])
+
+
+  // 4.2.2023 12.06
+  // Kuinka hakea pääkaupunkien säätietoja https://openweathermap.org
+  // 1. Muuta pääkaupungin nimi koordinaateiksi (https://openweathermap.org/api/geocoding-api )
+  // http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
+  //
+  // 2. Hae säätiedot (https://openweathermap.org/current )
+  // https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}
+  const getCapitalWeather = country => {
+      console.log(`Haetaan säätiedot ${country.name.common} pääkaupungille ${country.capital[0]}`)
+  }
 
   const selectCountries = (countries,queryValue) => {
     console.log(
@@ -161,7 +179,7 @@ const App = () => {
           {infoMessage}
         </div>
         <div>
-          <CountryList selectedCountries={selectedCountries} handleShowButton={handleShowButton} />
+          <CountryList selectedCountries={selectedCountries} handleShowButton={handleShowButton} getCapitalWeather={getCapitalWeather} />
         </div>
     </div>
   );
