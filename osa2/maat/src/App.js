@@ -65,7 +65,6 @@ const CountryList = ({selectedCountries}) => {
 const App = () => {
 
   const defaultInfoString = 'Search for country information'
-  const tooManyInfoString = 'Too many matches, specify another filter'
   const [query, setQuery] = useState('');
   const [infoMessage, setInfoMessage] = useState(defaultInfoString)
   const [countries,setCountries] = useState([])
@@ -100,13 +99,13 @@ const App = () => {
       console.log('valittuja maita',selected.length)
       const selection = [].concat(
         countries.filter(
-          country => country.name.common.includes(queryValue)
+          //country => country.name.common.includes(queryValue)
+          country => country.name.common.toLowerCase().includes(queryValue)
         ))
       setSelectedCountries(selection)
       handleInfoMessage(queryValue,selection)
     }
     //console.log('valittuja maita ',selectedCountries.length)
-    
   }
 
   const handleQueryField = event => {
@@ -121,9 +120,6 @@ const App = () => {
     //handleInfoMessage(event.target.value,selectedCountries)
   }
 
-  // const handleCountryFilter = (queryValue,countries,countriesToShow) => {
-    
-  // }
 
   const handleInfoMessage = (queryValue,countriesToShow) => {
     let helper = null
@@ -140,11 +136,6 @@ const App = () => {
     setInfoMessage(helper)
   }
 
-  const handleCountryListRender = selectedCountries => {
-
-  }
-  // const countriesToShow = 
-  // const handleQuery = value => {}
 
   return (
     <div>
