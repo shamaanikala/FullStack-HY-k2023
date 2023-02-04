@@ -1,10 +1,23 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-const CountryName = ({selectedCountry}) => {
+const ShowButton = ({id,selectedCountry, handleShowButton}) => {
+  const countryName = selectedCountry.name.common
+  console.log(countryName)
   return (
     <>
-      <div key={selectedCountry.fifa}>{selectedCountry.name.common}</div>
+      <button key={id} onClick={() => handleShowButton(selectedCountry,countryName)}>show</button>
+    </>
+  )
+}
+
+const CountryName = ({selectedCountry,handleShowButton}) => {
+  return (
+    <>
+      <div key={selectedCountry.fifa}>
+        {selectedCountry.name.common}
+        <ShowButton key={selectedCountry.fifa} selectedCountry={selectedCountry} handleShowButton={handleShowButton} />
+      </div>
     </>
   )
 }
@@ -39,7 +52,7 @@ const SingleCountryInformation = ({selectedCountry}) => {
   )
 }
 
-const CountryList = ({selectedCountries}) => {
+const CountryList = ({selectedCountries,handleShowButton}) => {
   if (selectedCountries.length === 1) {
     return (
       <SingleCountryInformation selectedCountry={selectedCountries[0]} />
@@ -54,7 +67,7 @@ const CountryList = ({selectedCountries}) => {
   return (
     <div>
       {selectedCountries.map(
-        (c,ind) => <CountryName key={ind} selectedCountry={c} />
+        (c,ind) => <CountryName key={ind} selectedCountry={c} handleShowButton={handleShowButton} />
       )}
     </div>
   )
@@ -100,7 +113,7 @@ const App = () => {
       const selection = [].concat(
         countries.filter(
           //country => country.name.common.includes(queryValue)
-          country => country.name.common.toLowerCase().includes(queryValue)
+          country => country.name.common.toLowerCase().includes(queryValue.toLowerCase())
         ))
       setSelectedCountries(selection)
       handleInfoMessage(queryValue,selection)
@@ -136,6 +149,10 @@ const App = () => {
     setInfoMessage(helper)
   }
 
+  const handleShowButton = (country,queryValue) => {
+    setQuery(queryValue)
+    selectCountries([country],queryValue)
+  }
 
   return (
     <div>
@@ -144,7 +161,7 @@ const App = () => {
           {infoMessage}
         </div>
         <div>
-          <CountryList selectedCountries={selectedCountries} />
+          <CountryList selectedCountries={selectedCountries} handleShowButton={handleShowButton} />
         </div>
     </div>
   );
